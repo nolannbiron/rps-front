@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
+        "build": "react-app-rewired build",
         "start": "react-app-rewired start"
     },
     "dependencies": {
