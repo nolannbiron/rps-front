@@ -23,6 +23,7 @@ const styles = {
 }
 
 const theme = extendTheme({
+    initialColorMode: 'dark',
     useSystemColorMode: true,
     styles,
     colors,

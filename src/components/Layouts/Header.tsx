@@ -31,13 +31,13 @@ export const Header = () => {
                     <LogoWrapper name="RPSLS" />
                 </Box>
                 <Flex alignItems="center" gap={4}>
+                    <ColorModeSwitcher aria-label="" />
                     {!!account && (
                         <Flex cursor="pointer" alignItems="center" onClick={onOpen}>
                             <Jazzicon diameter={35} seed={jsNumberForAddress(account)} />
                         </Flex>
                     )}
                     <ConnectWallet />
-                    <ColorModeSwitcher aria-label="" />
                 </Flex>
             </chakra.header>
             <Modal
