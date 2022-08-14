@@ -17,6 +17,9 @@ const styles = {
     Tooltip: {
         borderRadius: '100px',
     },
+    ModalContent: (props: any) => ({
+        bg: mode('whiteAlpha.900', 'blackAlpha.900')(props),
+    }),
 }
 
 const theme = extendTheme({
