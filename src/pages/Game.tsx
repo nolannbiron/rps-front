@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Text } from '@chakra-ui/react'
 import { BigNumber } from 'ethers'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Card, CardHeader } from '../components/Card'
 import GameInfo from '../components/Game/GameInfo'
 import GameRefund from '../components/Game/GameRefund'

@@ -41,7 +41,7 @@ export default function InfoWrapper({ title, content, important, winner }: Props
                 borderRadius={8}
                 position="relative"
             >
-                <Text isTruncated fontSize="md" fontWeight="bold" textAlign="center">
+                <Text noOfLines={1} fontSize="md" fontWeight="bold" textAlign="center">
                     {content}
                 </Text>
                 {showCopy && <FaRegCopy size={15} style={{ position: 'absolute', top: 10, right: 10 }} />}

@@ -45,7 +45,7 @@ export const Header = () => {
                 title="Your account"
                 render={
                     <Box mb={4}>
-                        <Text isTruncated>👱 Address : {account}</Text>
+                        <Text noOfLines={1}>👱 Address : {account}</Text>
                         <Text>🤑 Balance : {useGetPlayerBalance()} ETH</Text>
                     </Box>
                 }

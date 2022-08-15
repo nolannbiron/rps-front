@@ -168,3 +168,22 @@ export function useGetPlayerBalance() {
 
     return balance
 }
+
+export function useEtherPrice() {
+    const [price, setPrice] = React.useState<number>()
+    const provider = new ethers.providers.EtherscanProvider()
+    useEffect(() => {
+        async function fetch() {
+            if (!provider) return
+            await provider.getEtherPrice().then(function (price) {
+                setPrice(price)
+            })
+        }
+        fetch()
+        return () => {
+            provider.removeAllListeners()
+        }
+    }, [])
+
+    return price
+}

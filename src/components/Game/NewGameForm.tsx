@@ -136,7 +136,7 @@ export default function NewGameForm({ onClick }: Props) {
                         placeholder="Choose a stake"
                         isInvalid={!validateEthersBalance}
                         onChange={(e) => setNewGameData({ ...newGameData, stake: Number(e.currentTarget.value) })}
-                        isTruncated
+                        noOfLines={1}
                         pr={32}
                     />
                     <InputRightElement

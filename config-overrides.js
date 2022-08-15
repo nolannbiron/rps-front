@@ -14,10 +14,26 @@ module.exports = function override(config, env) {
     }
     config.plugins.push(
         new webpack.ProvidePlugin({
-            process: 'process/browser',
+            // process: 'process/browser',
             Buffer: ['buffer', 'Buffer'],
+            'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
+            'react/jsx-runtime.js': 'react/jsx-runtime',
         })
     )
+    config.module.rules.push({
+        test: /\.(ts)x?$/, // Just `tsx?` file only
+        use: [
+            // options.defaultLoaders.babel, I don't think it's necessary to have this loader too
+            {
+                loader: 'ts-loader',
+                options: {
+                    transpileOnly: true,
+                    experimentalWatchApi: true,
+                    onlyCompileBundledFiles: true,
+                },
+            },
+        ],
+    })
 
     return config
 }
