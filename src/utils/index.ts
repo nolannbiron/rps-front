@@ -164,7 +164,7 @@ export function useGetPlayerBalance() {
             return balance
         }
         fetch()
-    }, [])
+    }, [provider, account])
 
     return balance
 }
