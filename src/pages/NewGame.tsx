@@ -1,45 +1,40 @@
-import { Button, Container, Flex, Heading, Input, Select, Spacer, Spinner, Text, useToast } from '@chakra-ui/react'
+import { Container, Flex, Heading, Spinner, Text } from '@chakra-ui/react'
 import { parseEther } from '@ethersproject/units'
-import React, { ChangeEventHandler, useCallback, useContext } from 'react'
+import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Hasher } from '../abis/Hasher'
 import { RPS } from '../abis/RPS'
 import { Card, CardHeader } from '../components/Card'
-import ConnectWallet from '../components/ConnectWallet'
 import JoinGame from '../components/Game/JoinGame'
 import NewGameForm, { NewGameData } from '../components/Game/NewGameForm'
-import { GameContext } from '../contexts/GameContext'
+import { setGameCreated, useGame } from '../contexts/GameContext'
 import useContract from '../hooks/useContract'
 import useContractFactory from '../hooks/useContractFactory'
-import { randomSalt, getGameData } from '../utils'
+import { randomSalt } from '../utils'
 
 export default function NewGame() {
     const hasher = useContract(Hasher)
     const rps = useContractFactory(RPS)
     const navigate = useNavigate()
     const [gameLoading, setGameLoading] = React.useState(false)
-    const toast = useToast({
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-    })
+    const { dispatch } = useGame()
 
     const handleNewGame = useCallback(
         async ({ j1Move, j2Address, stake }: NewGameData) => {
             setGameLoading(true)
             const salt = randomSalt()
 
-            if (!hasher) return
-            if (!rps) return
+            if (!hasher || !rps) return setGameLoading(false)
 
             try {
-                const j1Commitment = await hasher.hash(j1Move, salt)
-                const contract = await rps.deploy(j1Commitment, j2Address, {
-                    value: parseEther(String(stake)),
+                const j1Hash = await hasher.hash(j1Move, salt)
+                const contract = await rps.deploy(j1Hash, j2Address, {
+                    value: parseEther(stake.toString()),
                     gasLimit: 1000000,
                 })
 
                 await contract.deployed()
+                dispatch(setGameCreated({ address: contract.address, salt: salt, j1Move }))
                 navigate(`/game/${contract.address}`, { state: { salt: salt, move: j1Move } })
                 setGameLoading(false)
             } catch (err) {

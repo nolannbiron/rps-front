@@ -20,7 +20,7 @@ declare namespace NodeJS {
 }
 
 interface Window {
-    ethereum: any
+    ethereum?: any
 }
 
 declare var process: NodeJS.Process

@@ -1,6 +1,5 @@
 import { Code, Flex, Text } from '@chakra-ui/react'
 import { useState } from 'react'
-import { CgCopy } from 'react-icons/cg'
 import { FaRegCopy } from 'react-icons/fa'
 import { useToast } from '@chakra-ui/react'
 

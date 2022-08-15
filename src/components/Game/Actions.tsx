@@ -1,8 +1,5 @@
-import { Text } from '@chakra-ui/react'
-import React, { useContext } from 'react'
 import { useGame } from '../../contexts/GameContext'
 import { getPlayerId, hasJ2Played, isGameDone } from '../../utils'
-import GameRefund from './GameRefund'
 import Play from './Play'
 import Solve from './Solve'
 

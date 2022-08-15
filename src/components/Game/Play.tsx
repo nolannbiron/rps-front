@@ -1,7 +1,7 @@
-import { Box, Button, Flex, Select, Spinner, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Spinner, Text } from '@chakra-ui/react'
 import React, { useCallback } from 'react'
 import { RPS } from '../../abis/RPS'
-import { Move, Moves, setGameData, setIsFetching, setIsLoading, useGame } from '../../contexts/GameContext'
+import { Game, Move, setGameData, setIsFetching, setIsLoading, useGame } from '../../contexts/GameContext'
 import useContract from '../../hooks/useContract'
 import { getGameData } from '../../utils'
 import { Card, CardHeader } from '../Card'
@@ -17,9 +17,11 @@ export default function Play() {
     const [move, setMove] = React.useState<Move>()
 
     const onSubmit = useCallback(
-        async (data: any) => {
+        async (data: { move?: Move }) => {
             dispatch(setIsFetching(true))
             const { move } = data
+
+            if (!move) return dispatch(setIsFetching(false))
 
             try {
                 const txn = await contract.play(move, {
@@ -51,7 +53,7 @@ export default function Play() {
                         <SelectMove
                             id="j1Move"
                             placeholder="Choose a move"
-                            onChange={(e: any) => setMove(e.target.value)}
+                            onChange={(e) => setMove(Number(e.currentTarget.value))}
                         />
                     ) : (
                         <>
@@ -65,7 +67,6 @@ export default function Play() {
                             justifySelf="center"
                             onClick={() => onSubmit({ move })}
                             disabled={!move}
-                            // isLoading={isFetching}
                         >
                             Make a Move
                         </Button>

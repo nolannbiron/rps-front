@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Text } from '@chakra-ui/react'
+import { Box, Container, Flex, Text } from '@chakra-ui/react'
 import { BigNumber } from 'ethers'
 import { useLocation, useParams } from 'react-router-dom'
 import { Card, CardHeader } from '../components/Card'
@@ -18,22 +18,13 @@ interface GameLocationState {
 
 export default function Game(): JSX.Element {
     const { contract } = useParams() as NonNullable<{ contract: string }>
-    const { state } = useLocation()
     useGameData({ address: contract })
     const {
-        state: { game },
+        state: { game, gameCreated },
     } = useGame()
 
-    if (!!(state as GameLocationState)?.move && !!(state as GameLocationState)?.salt)
-        return (
-            <GameCreated
-                move={(state as GameLocationState).move}
-                salt={(state as GameLocationState).salt}
-                address={contract}
-            />
-        )
-
-    console.log(game)
+    if (!!gameCreated.j1Move && !!gameCreated.salt)
+        return <GameCreated move={gameCreated.j1Move} salt={gameCreated.salt} address={contract} />
 
     return (
         <Container maxW="container.md" flexDirection="column" gap={3}>

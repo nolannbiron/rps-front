@@ -1,5 +1,4 @@
-import React from 'react'
-import { LogoWrapper } from './styled/header'
+import { LogoWrapper } from './styled'
 import { ColorModeSwitcher } from '../ColorMode/ColorModeSwitcher'
 import { Box, Button, chakra, Flex, Portal, Text, useColorModeValue } from '@chakra-ui/react'
 import { useWeb3Wallet } from '../../hooks/useWeb3Wallet'
@@ -47,7 +46,7 @@ export const Header = () => {
                 render={
                     <Box mb={4}>
                         <Text isTruncated>👱 Address : {account}</Text>
-                        <Text isTruncated>🤑 Balance : {useGetPlayerBalance()} ETH</Text>
+                        <Text>🤑 Balance : {useGetPlayerBalance()} ETH</Text>
                     </Box>
                 }
             />

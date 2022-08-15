@@ -39,8 +39,15 @@ export interface Game {
     result: string
 }
 
+export interface GameCreated {
+    j1Move: Move
+    salt?: BigNumber
+    address: string
+}
+
 interface GameState {
     game: Game
+    gameCreated: GameCreated
     isLoading: boolean
     isError: boolean
     isFetching: boolean
@@ -51,6 +58,7 @@ export type GameAction =
     | { type: 'SET_LOADING'; payload: boolean }
     | { type: 'SET_ERROR'; payload: boolean }
     | { type: 'SET_FETCHING'; payload: boolean }
+    | { type: 'SET_GAME_CREATED'; payload: GameCreated }
 
 interface GameContextType {
     state: GameState
@@ -72,6 +80,11 @@ const initialState: GameState = {
         lastAction: new Date(0),
         result: '',
         timeout: 0,
+    },
+    gameCreated: {
+        address: '',
+        j1Move: Move.Null,
+        salt: undefined,
     },
     isLoading: false,
     isError: false,
@@ -104,6 +117,11 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
             return {
                 ...state,
                 isFetching: action.payload,
+            }
+        case 'SET_GAME_CREATED':
+            return {
+                ...state,
+                gameCreated: action.payload,
             }
         default:
             return state
@@ -141,5 +159,10 @@ export const setGameData = (value: Game): { type: 'SET_GAME'; payload: Game } =>
 
 export const setError = (value: boolean): { type: 'SET_ERROR'; payload: boolean } => ({
     type: 'SET_ERROR',
+    payload: value,
+})
+
+export const setGameCreated = (value: GameCreated): { type: 'SET_GAME_CREATED'; payload: GameCreated } => ({
+    type: 'SET_GAME_CREATED',
     payload: value,
 })

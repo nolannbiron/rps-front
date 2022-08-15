@@ -1,23 +1,21 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import {
-    Box,
     Button,
     Flex,
     Input,
     InputGroup,
     InputLeftElement,
     InputRightElement,
-    Select,
     Tag,
     Text,
+    useColorModeValue,
 } from '@chakra-ui/react'
 import { useWeb3Wallet } from '../../hooks/useWeb3Wallet'
-import { getAddress, isAddress } from '@ethersproject/address'
+import { isAddress } from '@ethersproject/address'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import styled from 'styled-components'
-import { Game, Move, Moves } from '../../contexts/GameContext'
-import { isAddressEquals, useGetPlayerBalance, verifyOwner } from '../../utils'
-import { formatEther } from '@ethersproject/units'
+import { Move } from '../../contexts/GameContext'
+import { isAddressEquals, useGetPlayerBalance } from '../../utils'
 import SelectMove from '../SelectMove/SelectMove'
 import { chakra } from '@chakra-ui/react'
 import { FaEthereum } from 'react-icons/fa'
@@ -58,7 +56,7 @@ export default function NewGameForm({ onClick }: Props) {
             return false
         }
         return true
-    }, [newGameData.stake, balance])
+    }, [newGameData.stake])
 
     if (!account) return <></>
 
@@ -94,7 +92,7 @@ export default function NewGameForm({ onClick }: Props) {
                             (!!newGameData.j2Address && !isAddress(newGameData.j2Address))
                         }
                         placeholder="Choose a player"
-                        onChange={(e: any) =>
+                        onChange={(e) =>
                             setNewGameData({
                                 ...newGameData,
                                 j2Address: e.currentTarget.value,
@@ -124,7 +122,9 @@ export default function NewGameForm({ onClick }: Props) {
                         type="number"
                         placeholder="Choose a stake"
                         isInvalid={!validateEthersBalance}
-                        onChange={(e: any) => setNewGameData({ ...newGameData, stake: e.currentTarget.value })}
+                        onChange={(e) => setNewGameData({ ...newGameData, stake: Number(e.currentTarget.value) })}
+                        isTruncated
+                        pr={32}
                     />
                     <InputRightElement
                         w="fit-content"
@@ -138,6 +138,7 @@ export default function NewGameForm({ onClick }: Props) {
                                     _hover={{
                                         underline: 'none',
                                     }}
+                                    bg={useColorModeValue('whiteAlpha.900', 'blackAlpha.900')}
                                     disabled={newGameData.stake === balance}
                                 >
                                     MAX

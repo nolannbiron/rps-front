@@ -1,5 +1,5 @@
 // 1. import `extendTheme` function
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme, ThemeConfig, StyleProps } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
 
 const colors = {
@@ -8,7 +8,7 @@ const colors = {
     },
 }
 const styles = {
-    global: (props: any) => ({
+    global: (props: StyleProps) => ({
         body: {
             color: mode('gray.900', 'whiteAlpha.900')(props),
             bg: mode('whiteAlpha.900', 'blackAlpha.900')(props),
@@ -17,12 +17,12 @@ const styles = {
     Tooltip: {
         borderRadius: '100px',
     },
-    ModalContent: (props: any) => ({
+    ModalContent: (props: StyleProps) => ({
         bg: mode('whiteAlpha.900', 'blackAlpha.900')(props),
     }),
 }
 
-const theme = extendTheme({
+const theme: ThemeConfig = extendTheme({
     initialColorMode: 'dark',
     useSystemColorMode: true,
     styles,

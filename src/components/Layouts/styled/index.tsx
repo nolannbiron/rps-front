@@ -1,7 +1,6 @@
 import React from 'react'
 import { chakra, Flex } from '@chakra-ui/react'
-import { mode } from '@chakra-ui/theme-tools'
-import { Heading, Box } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import { ReactComponent as Logo } from '../../../assets/svg/logo.svg'
 
 export const HeaderWrapper = chakra('header', {

@@ -1,5 +1,4 @@
-import { useEffect, useContext, useState } from 'react'
-
+import { useEffect } from 'react'
 import { getGameData } from '../utils'
 import { setError, setGameData, setIsLoading, useGame } from '../contexts/GameContext'
 import useContract from './useContract'
@@ -10,8 +9,7 @@ export interface Props {
 }
 
 export default function useGameData({ address }: Props): void {
-    const { state, dispatch } = useGame()
-    const [isError, setIsError] = useState(false)
+    const { dispatch } = useGame()
     const contract = useContract({ abi: RPS.abi, address })
 
     useEffect(() => {
@@ -27,5 +25,5 @@ export default function useGameData({ address }: Props): void {
             .finally(() => {
                 dispatch(setIsLoading(false))
             })
-    }, [contract, dispatch])
+    }, [contract])
 }

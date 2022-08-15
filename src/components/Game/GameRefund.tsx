@@ -1,11 +1,10 @@
-import React from 'react'
 import { useCallback, useState } from 'react'
 import { RPS } from '../../abis/RPS'
 import useContract from '../../hooks/useContract'
 import { Game, setGameData, setIsFetching, setIsLoading, useGame } from '../../contexts/GameContext'
-import { Button, Spinner, Tag, Tooltip, useInterval } from '@chakra-ui/react'
+import { Button, Spinner, Tooltip, useInterval } from '@chakra-ui/react'
 import { canJ1Refund, canJ2Refund, getGameData, getPlayerId, hasJ2Played, isGameDone } from '../../utils'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface PlayerIdProps {
     address?: string

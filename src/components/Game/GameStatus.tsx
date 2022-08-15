@@ -1,15 +1,14 @@
 import { Box, BoxProps, Tag, TagLabel, TagLeftIcon, TagProps } from '@chakra-ui/react'
 import { CgDanger, CgSandClock } from 'react-icons/cg'
-import { useGame } from '../../contexts/GameContext'
+import { Game, useGame } from '../../contexts/GameContext'
 import { getPlayerId, hasJ2Played, isGameDone } from '../../utils'
 import { ImCheckmark, ImCross } from 'react-icons/im'
-import React from 'react'
 
 interface Props extends BoxProps {}
 
 export type GameStatus = 'pending' | 'settled' | 'cancelled' | 'actionNeeded'
 
-export const getGameStatusTag = (game: any): { icon: any; color: TagProps['colorScheme']; label: string } => {
+export const getGameStatusTag = (game: Game): { icon: any; color: TagProps['colorScheme']; label: string } => {
     const isSettled = isGameDone(game)
     const hasPlayed = hasJ2Played(game)
     const playerId = getPlayerId(game)
@@ -56,7 +55,7 @@ export const getGameStatusTag = (game: any): { icon: any; color: TagProps['color
     }
 }
 
-export const getGameStatus = (game: any): GameStatus => {
+export const getGameStatus = (game: Game): GameStatus => {
     const isSettled = isGameDone(game)
     const hasPlayed = hasJ2Played(game)
     const playerId = getPlayerId(game)

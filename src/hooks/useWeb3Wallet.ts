@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react'
 import { WalletConnect } from '@web3-react/walletconnect'
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
@@ -10,6 +11,12 @@ export const useWeb3Wallet = () => {
     const { isActive, account } = useWeb3React()
     const [loading, setLoading] = React.useState(false)
     const connexionType = (localStorage.getItem('connexionType') as ConnectionType) || false
+    const toast = useToast({
+        status: 'error',
+        isClosable: true,
+        duration: 5000,
+        position: 'top-right',
+    })
 
     const resetWalletConnector = () => {
         if (walletConnect && walletConnect instanceof WalletConnect && walletConnect.provider?.rpcUrl) {
@@ -19,14 +26,19 @@ export const useWeb3Wallet = () => {
 
     const connect = async (type: ConnectionType) => {
         setLoading(true)
-
         if (type === 'injected') {
-            await metaMask.activate(5).then(() => localStorage.setItem('connexionType', 'injected'))
+            await metaMask
+                .activate(5)
+                .then(() => localStorage.setItem('connexionType', 'injected'))
+                .catch(() => toast({ title: 'MetaMask not found' }))
         } else if (type === 'walletconnect') {
             await walletConnect
                 .activate(5)
                 .then(() => localStorage.setItem('connexionType', 'walletconnect'))
-                .catch(() => resetWalletConnector())
+                .catch(() => {
+                    toast({ title: 'Error connecting WalletConnect' })
+                    resetWalletConnector()
+                })
         }
         setLoading(false)
     }

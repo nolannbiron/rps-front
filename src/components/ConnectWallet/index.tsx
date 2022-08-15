@@ -1,15 +1,16 @@
-import { Button, Flex, Portal, useDisclosure, useModal } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Flex, Portal, useDisclosure } from '@chakra-ui/react'
 import { useWeb3Wallet } from '../../hooks/useWeb3Wallet'
 import Metamask from '../../assets/svg/metamask.png'
 import WalletConnect from '../../assets/svg/walletconnect.png'
 import { Modal } from '../Modal'
+import { useWeb3Network } from '../../hooks/useWeb3Network'
 
 export default function ConnectWallet() {
     const { connect, loading, disconnect, active } = useWeb3Wallet()
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { networkError } = useWeb3Network()
     return (
-        <>
+        <Box>
             <Button
                 colorScheme="teal"
                 onClick={() => (active ? disconnect() : onOpen())}
@@ -54,6 +55,6 @@ export default function ConnectWallet() {
                     }
                 />
             </Portal>
-        </>
+        </Box>
     )
 }

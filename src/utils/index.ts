@@ -7,7 +7,6 @@ import { AddressZero } from '@ethersproject/constants'
 import { BigNumber } from 'ethers'
 import { Game, Move } from '../contexts/GameContext'
 import { useWeb3Wallet } from '../hooks/useWeb3Wallet'
-import { Tag } from '@chakra-ui/react'
 import { ownerTag } from './render'
 import { useWeb3React } from '@web3-react/core'
 
@@ -30,16 +29,16 @@ export function shortenAddress(address: string, chars = 4) {
 }
 
 // account is optional
-export function getContract(address: string, ABI: any, library: any, account: string) {
+export function getContract(address: string, abi: any, library: any, account: string) {
     if (!isAddress(address) || address === AddressZero) {
         throw Error(`Invalid 'address' parameter '${address}'.`)
     }
 
-    return new ethers.Contract(address, ABI, library.getSigner(account))
+    return new ethers.Contract(address, abi, library.getSigner(account))
 }
 
-export function getContractFactory(bytecode: string, ABI: any, library: any, account?: string | null): ContractFactory {
-    return new ContractFactory(ABI, bytecode, library.getSigner(account))
+export function getContractFactory(bytecode: string, abi: any, library: any, account?: string | null): ContractFactory {
+    return new ContractFactory(abi, bytecode, library.getSigner(account))
 }
 
 export const formatNumber = (value: number, library: any): string => {
@@ -154,14 +153,14 @@ export function getPlayerId(game: Game): 1 | 2 | undefined {
 }
 
 export function useGetPlayerBalance() {
-    const { account, provider } = useWeb3React()
+    const { provider, account } = useWeb3React()
     const [balance, setBalance] = React.useState<number>(0)
 
     useEffect(() => {
         async function fetch() {
             if (!provider) return
-            const balance = await provider.getBalance(account ?? '')
-            setBalance(Number(formatEther(balance)))
+            const balance = !!account && (await provider.getBalance(account))
+            !!balance && setBalance(Number(formatEther(balance)))
             return balance
         }
         fetch()

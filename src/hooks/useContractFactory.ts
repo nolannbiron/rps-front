@@ -1,6 +1,5 @@
-import { ContractFactory } from '@ethersproject/contracts'
 import { useWeb3React } from '@web3-react/core'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { getContractFactory } from '../utils'
 
 interface Props {
@@ -11,13 +10,15 @@ interface Props {
 export default function useContractFactory({ bytecode, abi }: Props) {
     const { provider, account } = useWeb3React()
 
-    return useMemo(() => {
+    const contract = useMemo(() => {
         if (!abi || !provider || !bytecode) return null
         try {
             return getContractFactory(bytecode, abi, provider, account)
         } catch (error) {
-            console.error('Failed to get contract', error)
+            console.error('Failed to create contract', error)
             return null
         }
     }, [bytecode, abi, provider, account])
+
+    return contract
 }
