@@ -74,7 +74,16 @@ export default function NewGameForm({ onClick }: Props) {
                 />
             </Flex>
             <Flex w="full" direction="column" gap={2}>
-                <chakra.label fontWeight="medium" htmlFor="j2Address">
+                <chakra.label
+                    color={
+                        isAddressEquals(newGameData.j2Address, account) ||
+                        (!!newGameData.j2Address && !isAddress(newGameData.j2Address))
+                            ? 'red.500'
+                            : useColorModeValue('black', 'white')
+                    }
+                    fontWeight="medium"
+                    htmlFor="j2Address"
+                >
                     👱 Player 2 address
                 </chakra.label>
                 <InputGroup id="j2Address">
@@ -112,7 +121,11 @@ export default function NewGameForm({ onClick }: Props) {
                 )}
             </Flex>
             <Flex w="full" direction="column" gap={2}>
-                <chakra.label fontWeight="medium" htmlFor="j2Address">
+                <chakra.label
+                    color={!validateEthersBalance ? 'red.500' : useColorModeValue('black', 'white')}
+                    fontWeight="medium"
+                    htmlFor="j2Address"
+                >
                     💰 Stake
                 </chakra.label>
                 <InputGroup>
